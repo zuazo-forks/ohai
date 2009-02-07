@@ -16,9 +16,16 @@
 # limitations under the License.
 #
 
+require_plugin 'ruby'
+
 kernel Mash.new
-kernel[:name] = from("uname -s")
-kernel[:release] = from("uname -r")
-kernel[:version] = from("uname -v")
-kernel[:machine] = from("uname -m")
-kernel[:modules] = Mash.new
+case languages[:ruby][:host_os]
+when /mswin32/
+  require_plugin "#{languages[:ruby][:host_os]}::kernel"
+else
+  kernel[:name] = from("uname -s")
+  kernel[:release] = from("uname -r")
+  kernel[:version] = from("uname -v")
+  kernel[:machine] = from("uname -m")
+  kernel[:modules] = Mash.new
+end
