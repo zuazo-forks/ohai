@@ -17,7 +17,6 @@
 #
 
 require_plugin "languages"
-output = nil
 
 erlang = Mash.new
 case languages[:ruby][:host_os]
