@@ -17,6 +17,7 @@
 #
 
 require_plugin "languages"
+require_plugin "platform"
 output = nil
 
 erlang = Mash.new
