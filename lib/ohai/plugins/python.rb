@@ -20,7 +20,7 @@ require_plugin "languages"
 output = nil
 
 python = Mash.new
-status, stdout, error = run_command(:no_status_check => true, :command => "python -c \"import sys; print sys.version\"")
+status, stdout, stderr = run_command(:no_status_check => true, :command => "python -c \"import sys; print sys.version\"")
 
 if status == 0
   output = stdout.split
