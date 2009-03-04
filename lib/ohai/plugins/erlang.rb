@@ -20,8 +20,8 @@ require_plugin "languages"
 output = nil
 
 erlang = Mash.new
-case languages[:ruby][:host_os]
-when /mswin32/
+case platform
+when /windows/
   # do nothing
   true
 else
