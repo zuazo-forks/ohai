@@ -16,12 +16,19 @@
 # limitations under the License.
 #
 
-$:.unshift(File.dirname(__FILE__)) unless
-  $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
 
-require 'ohai/config'
-require 'ohai/system'
+require File.join(File.dirname(__FILE__), '..', '..', '..', '/spec_helper.rb')
 
-module Ohai
-  VERSION = '0.2.1'
+describe Ohai::System, "FreeBSD hostname plugin" do
+  before(:each) do
+    @ohai = Ohai::System.new    
+    @ohai.stub!(:require_plugin).and_return(true)
+    @ohai[:os] = "freebsd"
+    @ohai.stub!(:from).with("hostname -s").and_return("katie")
+    @ohai.stub!(:from).with("hostname -f").and_return("katie.bethell")
+  end
+  
+  it_should_check_from("freebsd::hostname", "hostname", "hostname -s", "katie")
+  
+  it_should_check_from("freebsd::hostname", "fqdn", "hostname -f", "katie.bethell")
 end
